@@ -3,13 +3,15 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+const defaultContactForm={
+  username:"",
+  emai:"",
+  message:"".
+};
+
 function App() {
 
-  const[contact,setContact]=useState({
-    username:"",
-    email:"",
-    message:"",
-  });
+  const[contact,setContact]=useState(defaultContactForm);
 
   const handleInput=(e)=>{
     const name =e.target.name;
@@ -22,10 +24,28 @@ function App() {
 
   };
 
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
     e.preventDefault(); // handle for form submission infos
 
-    console.log(contact)
+    try{ 
+      const repsonse= await fetch('',{
+        method:"POST",
+        header:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify(user)
+      });
+
+      if(repsonse.ok){
+        setContact(defaultContactForm);
+        const data=await rsponse.json();
+        console.log(data);
+        alert("Message sent sucessfully")
+      }
+
+    } catch(error){
+      console.log(error)
+    }
   }
 
  
